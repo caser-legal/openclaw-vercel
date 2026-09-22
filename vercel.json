@@ -1,0 +1,21 @@
+{
+  "regions": ["iad1"],
+  "installCommand": "npm install",
+  "crons": [
+    { "path": "/api/cron/watchdog", "schedule": "*/5 * * * *" }
+  ],
+  "functions": {
+    "src/app/api/admin/ssh/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/queues/launch-verify/route.ts": {
+      "maxDuration": 300,
+      "experimentalTriggers": [
+        {
+          "type": "queue/v2beta",
+          "topic": "launch-verify"
+        }
+      ]
+    }
+  }
+}
